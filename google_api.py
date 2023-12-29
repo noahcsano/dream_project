@@ -9,7 +9,7 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 spreadsheet_id = "1nOYY4SqnoJ3il2QJ7vMOngiIXLBKX2pgskLNoDUdPC4"
-range_name = ['Career Development!A2:Z', 'Community Engagement!A2:Z', 'Student-Athlete Performance!A2:Z', 'Personal Development, Misc.!A2:Z']
+range_name = ['Career Development!A1:Z', 'Community Engagement!A1:Z', 'Student-Athlete Performance!A1:Z', 'Personal Development, Misc.!A1:Z']
 
 def main():
     creds = None
@@ -47,6 +47,16 @@ def main():
                 print("No data found.")
                 return
             
+            #Set Lables of columns as keys in dictionary
+            lables = values[0]
+            data_dic = dict.fromkeys(lables)
+            for row in values:
+                for item in range(len(row)):
+                    if item < len(lables):
+                        #Remove pass and finish code here
+                        pass
+
+            #Adding sheet into data dictionary with its sheet name as keys
             data[spread[:len(spread) - 5]] = values
         
         for key in data:
