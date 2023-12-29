@@ -9,7 +9,7 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 spreadsheet_id = "1nOYY4SqnoJ3il2QJ7vMOngiIXLBKX2pgskLNoDUdPC4"
-range_name = 'Career Development!A2:Z'
+range_name = ['Career Development!A2:Z', 'Community Engagement!A2:Z', 'Student-Athlete Performance!A2:Z', 'Personal Development, Misc.!A2:Z']
 
 def main():
     creds = None
@@ -30,23 +30,27 @@ def main():
             token.write(creds.to_json())
 
     try:
-        service = build("sheets", "v4", credentials=creds)
+        data = {}
+        for spread in range_name:
+            service = build("sheets", "v4", credentials=creds)
 
-        # Call the Sheets API
-        sheet = service.spreadsheets()
-        result = (
-            sheet.values()
-            .get(spreadsheetId=spreadsheet_id, range=range_name)
-            .execute()
-        )
-        values = result.get("values", [])
+            # Call the Sheets API
+            sheet = service.spreadsheets()
+            result = (
+                sheet.values()
+                .get(spreadsheetId=spreadsheet_id, range=spread)
+                .execute()
+            )
+            values = result.get("values", [])
 
-        if not values:
-            print("No data found.")
-            return
+            if not values:
+                print("No data found.")
+                return
+            
+            data[spread[:len(spread) - 5]] = values
         
-        for row in values:
-            print(row)
+        for key in data:
+            print(key)
 
     except HttpError as err:
         print(err)
