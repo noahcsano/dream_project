@@ -41,26 +41,28 @@ def main():
                 .get(spreadsheetId=spreadsheet_id, range=spread)
                 .execute()
             )
+            #Values is a list of the rows in the spreadsheets
             values = result.get("values", [])
+            print(type(values))
 
             if not values:
                 print("No data found.")
                 return
             
+            #How should we organize the data or can we skip this and organize the data later when needed?
+            '''
             #Set Lables of columns as keys in dictionary
             lables = values[0]
-            data_dic = dict.fromkeys(lables)
+            data_dic = {column: [] for column in lables}
             for row in values:
                 for item in range(len(row)):
                     if item < len(lables):
                         #Remove pass and finish code here
                         pass
+            '''
 
             #Adding sheet into data dictionary with its sheet name as keys
             data[spread[:len(spread) - 5]] = values
-        
-        for key in data:
-            print(key)
 
     except HttpError as err:
         print(err)
