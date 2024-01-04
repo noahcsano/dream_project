@@ -66,6 +66,7 @@ def main():
 
             #Adding sheet into data dictionary with its sheet name as keys
             data[spread[:len(spread) - 5]] = values
+        return data
 
     except HttpError as err:
         print(err)
