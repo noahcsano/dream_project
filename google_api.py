@@ -1,5 +1,4 @@
 import os
-import pandas as pd
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -7,9 +6,17 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+class Questions:
+    def __init__(self, level, data_collection_method, item, item_stem, anchor):
+        self.level = level
+        self.dcm = data_collection_method
+        self.item = item
+        self.question = item_stem
+        self.anchor = anchor
+
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 spreadsheet_id = "1nOYY4SqnoJ3il2QJ7vMOngiIXLBKX2pgskLNoDUdPC4"
-range_name = ['Career Development!A1:Z', 'Community Engagement!A1:Z', 'Student-Athlete Performance!A1:Z', 'Personal Development, Misc.!A1:Z']
+range_name = ['Career Development!A2:Z', 'Community Engagement!A2:Z', 'Student-Athlete Performance!A2:Z', 'Personal Development, Misc.!A2:Z']
 
 def main():
     creds = None
@@ -42,24 +49,20 @@ def main():
                 .execute()
             )
             #Values is a list of the rows in the spreadsheets
+            
             values = result.get("values", [])
-            print(type(values))
 
             if not values:
                 print("No data found.")
                 return
             
-            #How should we organize the data or can we skip this and organize the data later when needed?
-            '''
-            #Set Lables of columns as keys in dictionary
-            lables = values[0]
-            data_dic = {column: [] for column in lables}
-            for row in values:
-                for item in range(len(row)):
-                    if item < len(lables):
-                        #Remove pass and finish code here
-                        pass
-            '''
+            #Making each entry in values to be a Questions object
+            for i in range(len(values)):
+                temp = values[i]
+                if spread == 'Career Development!A2:Z':
+                    values[i] = Questions(temp[0], temp[3], temp[4], temp[5], temp[7])
+                else:
+                    values[i] = Questions(temp[0], temp[3], temp[4], temp[5], temp[6])
 
             #Adding sheet into data dictionary with its sheet name as keys
             data[spread[:len(spread) - 5]] = values
