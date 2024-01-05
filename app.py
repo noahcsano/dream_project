@@ -16,7 +16,7 @@ def category():
 
 @app.route("/about")
 def about():
-    return "About Page!"
+    return render_template('about.html')
 
 if __name__ == '__main':
     app.run(debug=True)
