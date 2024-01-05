@@ -3,6 +3,8 @@ import google_api
 
 app = Flask(__name__)
 
+sheets = google_api.main()
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -10,8 +12,7 @@ def home():
 
 @app.route("/categories")
 def category():
-    sheets = google_api.main().keys()
-    return render_template('categories.html', categories=sheets)
+    return render_template('categories.html', categories=sheets.keys())
 
 @app.route("/about")
 def about():

@@ -1,12 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cameron Institute</title>
-    </head>
-    <body>
-        {% for category in categories %}
-        <h1>{{ category }}</h1>
-        {% endfor %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cameron Institute</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eeeeee;
+            text-align: center;
+        }
+    
+        header {
+            background-color: #003262;
+            color: #fff;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        h1 {
+            margin: 0;
+            color: #FDB515;
+        }
+
+        h2 {
+            margin: 0;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><a href="/home" style="color:#FDB515;">Cameron Institute</a></h1>
+        <h2><a href="/about" style="color: white">About 🏠</a></h2>
+    </header>
+
+    <div>
+        <!-- Your main content goes here -->
+        <p>{% for category in categories %}
+            <h1>{{ category }}</h1>
+            {% endfor %}</p>
+    </div>
+
+</body>
+</html>
