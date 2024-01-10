@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, render_template
 import google_api
 
 app = Flask(__name__)
+app.static_folder = "static"
 
 sheets = google_api.main()
 
