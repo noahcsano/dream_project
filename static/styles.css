@@ -29,3 +29,14 @@ a {
     color: white;
     text-decoration: none;
 }
+
+#home_img {
+    float: left
+}
+
+.center {
+    padding-left: 300px;
+    padding-right: 300px;
+    padding-top: 100px;
+    padding-bottom: auto;
+}
