@@ -6,11 +6,13 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from collections import defaultdict
+
 class Questions:
-    def __init__(self, level, data_collection_method, item, item_stem, anchor):
+    def __init__(self, level, data_collection_method, sub_cat, item_stem, anchor):
         self.level = level
         self.dcm = data_collection_method
-        self.item = item
+        self.sub_cat = sub_cat
         self.question = item_stem
         self.anchor = anchor
 
@@ -57,15 +59,18 @@ def main():
                 return
             
             #Making each entry in values to be a Questions object
+            sub_categories = defaultdict(list)
             for i in range(len(values)):
                 temp = values[i]
                 if spread == 'Career Development!A2:Z':
                     values[i] = Questions(temp[0], temp[3], temp[4], temp[5], temp[7])
                 else:
                     values[i] = Questions(temp[0], temp[3], temp[4], temp[5], temp[6])
-
+                sub = values[i].sub_cat.split("->")
+                values[i].sub_cat = sub
+                sub_categories[sub[0]].append(values[i])
             #Adding sheet into data dictionary with its sheet name as keys
-            data[spread[:len(spread) - 5]] = values
+            data[spread[:len(spread) - 5]] = sub_categories
         return data
 
     except HttpError as err:

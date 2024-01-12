@@ -15,6 +15,10 @@ def home():
 def category():
     return render_template('categories.html', categories=sheets.keys())
 
+@app.route("/sub_categories")
+def sub_cat(cat):
+    return render_template('sub_cat.html', sub_cats=sheets[cat].keys())
+
 @app.route("/about")
 def about():
     return render_template('about.html')
