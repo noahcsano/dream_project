@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template
+from flask import Flask, redirect, url_for, render_template, request
 import google_api
 
 app = Flask(__name__)
@@ -11,11 +11,14 @@ sheets = google_api.main()
 def home():
     return render_template('home.html')
 
-@app.route("/categories")
+@app.route("/categories", methods = ["GET", 'POST'])
 def category():
+    if request.method == 'POST':
+        category = request.form['input']
+        return redirect(url_for('sub_cat', cat=category))
     return render_template('categories.html', categories=sheets.keys())
 
-@app.route("/sub_categories")
+@app.route('/sub_categories/<cat>')
 def sub_cat(cat):
     return render_template('sub_cat.html', sub_cats=sheets[cat].keys())
 

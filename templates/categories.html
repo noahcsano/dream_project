@@ -15,9 +15,11 @@
 
     <div>
         <!-- Your main content goes here -->
-        <p>{% for category in categories %}
-            <button type="button" onclick="">{{ category }}</button>
-            {% endfor %}</p>
+        <form action="{{ url_for('category') }}" method="POST">
+            <p>{% for category in categories %}
+                <button type="submit" name="input" value="{{ category }}">{{ category }}</button>
+                {% endfor %}</p>
+        </form>
     </div>
 
 </body>
