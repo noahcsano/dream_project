@@ -15,10 +15,15 @@
 
     <div>
         <!-- Your main content goes here -->
-        <p>{% for sub in sub_cats %}
-            <p>{{ sub }}</p>
-            {% endfor %}</p>
+        <form action="{{ url_for('sub_cat', cat=category) }}" method="POST">
+            <p>
+                {% for sub in sub_cats %}
+                <button type="submit" name="filter" value="{{ sub }}">
+                    {{ sub }}
+                </button>
+                    {% endfor %}
+            </p>
+        </form>
     </div>
-
 </body>
 </html>

@@ -71,6 +71,7 @@ def main():
                 sub_categories[sub[0]].append(values[i])
             #Adding sheet into data dictionary with its sheet name as keys
             data[spread[:len(spread) - 5]] = sub_categories
+        print(data['Career Development']['Professionals'])
         return data
 
     except HttpError as err:
