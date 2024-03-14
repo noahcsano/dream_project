@@ -1,8 +1,9 @@
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, redirect, url_for, render_template, request, session
 import google_api
 
 app = Flask(__name__)
 app.static_folder = "static"
+cart = {}
 
 sheets = google_api.main()
 
@@ -34,5 +35,18 @@ def survey_Qs(category, sub_category):
 def about():
     return render_template('about.html')
 
-if __name__ == '__main':
+# Add to Cart route
+@app.route('/add_to_cart/<int:product_id>')
+def add_to_cart(product_id):
+    if 'cart' not in session:
+        session['cart'] = {}
+
+    if product_id not in session['cart']:
+        session['cart'][product_id] = 1
+    else:
+        session['cart'][product_id] += 1
+
+    return 'Product added to cart!'
+
+if __name__ == '__main__':
     app.run(debug=True)
