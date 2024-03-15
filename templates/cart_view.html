@@ -13,18 +13,11 @@
         <h2><a href="/about" style="color: white">About 🏠</a></h2>
     </header>
 
-    <div align="right">
-        <button onclick="window.location.href='/cart'">View Cart</button>
-    </div>
     <div>
         <!-- Your main content goes here -->
-        <form action="{{ url_for('survey_Qs', category=category, sub_category=sub_category) }}" method="POST">
-            <p>{% for q in Qs %}
-                <button type="submit" name="q" value="{{ q }}">
-                    {{ q.question }}
-                </button>
-                {% endfor %}</p>
-        </form>
+        <p>{% for q in cart %}
+            <li>{{ q.question}} </li>
+            {% endfor %}</p>
     </div>
 </body>
 </html>

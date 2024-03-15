@@ -15,6 +15,12 @@ header {
     align-items: center;
 }
 
+menu {
+    color: #000000;
+    border-right: 1px solid #ccc;
+    padding: 50px;
+}
+
 h1 {
     margin: 0;
     color: #FDB515;

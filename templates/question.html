@@ -12,19 +12,9 @@
         <h1><a href="/home" style="color:#FDB515;">Cameron Institute</a></h1>
         <h2><a href="/about" style="color: white">About 🏠</a></h2>
     </header>
-
-    <div align="right">
-        <button onclick="window.location.href='/cart'">View Cart</button>
-    </div>
     <div>
-        <!-- Your main content goes here -->
-        <form action="{{ url_for('survey_Qs', category=category, sub_category=sub_category) }}" method="POST">
-            <p>{% for q in Qs %}
-                <button type="submit" name="q" value="{{ q }}">
-                    {{ q.question }}
-                </button>
-                {% endfor %}</p>
-        </form>
+        <h1>{{ q }}</h1>
+        <button>Add?</button>
     </div>
 </body>
 </html>
