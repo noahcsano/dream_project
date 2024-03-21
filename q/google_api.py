@@ -10,7 +10,8 @@ from googleapiclient.errors import HttpError
 from collections import defaultdict
 
 class Questions:
-    def __init__(self, level, data_collection_method, category, sub_cat, item_stem, anchor):
+    def __init__(self, id, level, data_collection_method, category, sub_cat, item_stem, anchor):
+        self.id = id
         self.level = level
         self.dcm = data_collection_method
         self.category = category
@@ -42,6 +43,8 @@ def main():
 
     try:
         data = {}
+        id = 0
+        id_and_questions = {}
         for spread in range_name:
             service = build("sheets", "v4", credentials=creds)
 
@@ -66,16 +69,17 @@ def main():
             for i in range(len(values)):
                 temp = values[i]
                 if spread == 'Career Development!A2:Z':
-                    values[i] = Questions(temp[0], temp[3], category, temp[4], temp[5], temp[7])
+                    values[i] = Questions(id, temp[0], temp[3], category, temp[4], temp[5], temp[7])
                 else:
-                    values[i] = Questions(temp[0], temp[3], category, temp[4], temp[5], temp[6])
+                    values[i] = Questions(id, temp[0], temp[3], category, temp[4], temp[5], temp[6])
                 sub = values[i].sub_cat.split("->")
                 values[i].sub_cat = sub
                 sub_categories[sub[0]].append(values[i])
+                id_and_questions[values[i].id] = values[i]
+                id += 1
             #Adding sheet into data dictionary with its sheet name as keys
             data[category] = sub_categories
-        print(data['Career Development']['Professionals'])
-        return data
+        return (data, id_and_questions)
 
     except HttpError as err:
         print(err)

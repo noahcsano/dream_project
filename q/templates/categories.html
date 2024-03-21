@@ -68,7 +68,7 @@
                 <td>{{q.question}}</td>
                 <td>
                     <form action="{{ url_for('survey_Qs', category=category, sub_category=sub_category) }}" method="POST">
-                        <button type="submit" name="q" value="{{ q }}" class="btn btn-primary btn-warning">Add to cart</button>
+                        <button type="submit" name="q" value="{{ q.id }}" class="btn btn-primary btn-warning">Add to cart</button>
                     </form>
                 </td>
             </tr>

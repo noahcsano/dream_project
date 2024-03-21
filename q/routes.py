@@ -5,7 +5,7 @@ from q import app
 
 app.static_folder = "static"
 
-sheets = google_api.main()
+sheets, id_and_questions = google_api.main()
 
 @app.route("/")
 @app.route("/home")
@@ -32,20 +32,12 @@ def survey_Qs(category, sub_category):
     if 'cart' not in session:
         session['cart'] = []
     if request.method == 'POST':
-        cart = session.get('cart', [])
-        q_obj = None
-        q = request.form['q']
-        q_obj = q
-        '''
-        for item in sheets[category][sub_category]:
-            if str(item) == q:
-                q_obj = item
-        '''
-        if q_obj:
-            if q_obj in session['cart']:
+        q_id = request.form['q']
+        if q_id:
+            if q_id in session['cart']:
                 flash("The selected question is already in your cart. Please choose another question, or proceed to checkout by selecting the cart tab if you have finished.")
             else:
-                session['cart'].append(q_obj)
+                session['cart'].append(q_id)
                 flash("The question has been added to your cart.")
     return render_template('categories.html', Qs=sheets[category][sub_category], category=category, sub_category=sub_category)
 
@@ -55,7 +47,11 @@ def about():
 
 @app.route('/cart')
 def view_cart():
-    return render_template('cart_view.html', shopping_cart=session['cart'])
+    if len(session['cart']) > 0:
+        cart = []
+        for id in session['cart']:
+            cart.append(id_and_questions[int(id)])
+    return render_template('cart_view.html', shopping_cart=cart)
 
 @app.route('/add_to_cart/<question>')
 def question_option(question):
