@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content%}
+
+  <body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="p-4 border rounded bg-light">
+                    <h2 class="text-center mb-4">Research Form Procedure</h2>
+                    <p class="text-center">In order to create a Google Form for your research project, follow these steps:</p>
+                    <ol>
+                        <li>Select the topics or questions you want to include in your form.</li>
+                        <li>Log in to your Google account and go to Google Forms.</li>
+                        <li>Click on the '+' button to create a new form.</li>
+                        <li>Give your form a title and description.</li>
+                        <li>Add your selected topics/questions as form fields (e.g., multiple-choice, text, etc.).</li>
+                        <li>Customize the design and settings of your form as needed.</li>
+                        <li>Preview your form to ensure everything looks correct.</li>
+                        <li>Once satisfied, click on the 'Send' button to distribute your form via email, social media, or direct link.</li>
+                        <li>Collect and analyze the responses to your research questions!</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="button" onclick="window.location.href='/categories'">Click To Start</button>
+    </div>
+
+</body>
+
+{% endblock content%}

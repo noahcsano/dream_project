@@ -1,0 +1,111 @@
+{% extends 'layout.html' %}
+
+{% block content%}
+
+<div class="container mt-5">
+    <!--Flash message display-->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flashes">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="background-color: #d4edda; color: #155724;">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <table class="table table-sm table-condensed table-striped table-hover">
+        {% if categ %}
+        <thead>
+            <th></th>
+            <th>Category</th>
+            <th>Select</th>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{category}}</td>
+                <td>
+                    <form action="{{ url_for('category') }}" method="POST">
+                        <button type="submit" name="cat" value="{{ category }}" class="btn btn-primary">Select</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% elif s_cat %}
+        <thead>
+            <th></th>
+            <th>Sub-Category</th>
+            <th>Select</th>
+        </thead>
+        <tbody>
+            {% for sub in sub_cats %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{sub}}</td>
+                <td>
+                    <form action="{{ url_for('sub_cat', cat=category) }}" method="POST">
+                        <button type="submit" name="sub_category" value="{{ sub }}" class="btn btn-primary">Select</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% else %}
+        <thead>
+            <th></th>
+            <th>Questions</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for q in Qs %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{q.question}}</td>
+                <td>
+                    <form action="{{ url_for('survey_Qs', category=category, sub_category=sub_category) }}" method="POST">
+                        <button type="submit" name="q" value="{{ q }}" class="btn btn-primary btn-warning">Add to cart</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% endif %}
+    </table>
+    {% if s_cat %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{{ url_for('category') }}" class="btn btn-secondary">Back</a>
+    </div>
+    {% elif not categ %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="{{ url_for('sub_cat', cat=category) }}" class="btn btn-secondary">Back</a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Script for making messages fade automatically after 3 seconds-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select all elements with the class 'alert' inside the '.flashes' container
+        var alerts = document.querySelectorAll('.flashes .alert');
+
+        // Function to automatically fade out alerts after 3 seconds
+        function autoFadeOut(alert) {
+            setTimeout(function() {
+                alert.classList.remove('show');
+            }, 3000);
+        }
+
+        // Iterate over each alert, add the 'fade' class, and call autoFadeOut function
+        alerts.forEach(function(alert) {
+            alert.classList.add('fade');
+            autoFadeOut(alert);
+        });
+    });
+</script>
+
+{% endblock content %}
